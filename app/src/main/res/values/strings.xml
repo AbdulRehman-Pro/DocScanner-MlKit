@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">DocScan</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="burst_mode_description"><![CDATA[<b>Burst Mode</b><br>Multiple pictures seamlessly for rapid scanning]]></string>
+
+</resources>

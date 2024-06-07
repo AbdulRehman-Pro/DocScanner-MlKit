@@ -1,0 +1,60 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.DocScan" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/lightGrey</item>
+        <item name="colorPrimaryVariant">@color/darkGreyBg</item>
+        <item name="colorOnPrimary">@color/darkGreyBg</item>
+
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/lightGrey</item>
+        <item name="android:navigationBarColor">@color/lightGrey</item>
+        <!-- Customize your theme here. -->
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+
+
+
+    </style>
+
+    <style name="DialogAnim">
+        <item name="android:windowEnterAnimation">@anim/slide_in_bottom</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_bottom</item>
+    </style>
+
+    <style name="RadioButtonStyle" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlActivated">@color/blue</item>
+    </style>
+
+
+    <style name="ButtonStyle" parent="Widget.Material3.CompoundButton.MaterialSwitch">
+        <item name="thumbTint">@color/thumb_icon</item>
+        <item name="trackTint">@color/track_tint</item>
+
+    </style>
+
+    <style name="Theme.BottomNavigationView.ActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/blue</item>
+        <item name="colorOnSecondaryContainer">@color/darkGreyBg</item>
+    </style>
+
+    <style name="SplashScreenTheme" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/darkGreyBg</item>
+
+        <item name="windowSplashScreenAnimationDuration">50</item>
+
+        <item name="postSplashScreenTheme">@style/FullScreen</item>
+    </style>
+
+    <style name="FullScreen" parent="Theme.Material3.Light.NoActionBar">
+        <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="o_mr1">shortEdges
+        </item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+
+</resources>
