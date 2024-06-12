@@ -1,7 +1,13 @@
 <resources>
     <string name="app_name">DocScan</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="burst_mode_description"><![CDATA[<b>Burst Mode</b><br>Multiple pictures seamlessly for rapid scanning]]></string>
+    <string name="image_description">Image Description</string>
+    <string name="image_title">Image Title</string>
+    <string name="scannedImage">Scanned Image</string>
+    <string name="more_options">More Options</string>
+    <string name="docscan">DocScan</string>
+    <string name="explore">Explore</string>
+    <string name="setting">Setting</string>
+    <string name="unknown">Unknown</string>
+    <string name="no_files_found">No files found.</string>
 
 </resources>

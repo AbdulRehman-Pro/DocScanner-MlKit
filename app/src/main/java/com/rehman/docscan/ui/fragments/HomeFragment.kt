@@ -1,12 +1,9 @@
 package com.rehman.docscan.ui.fragments
 
-import android.Manifest
 import android.app.Activity
 import android.content.ContentResolver
-import android.content.ContentUris
 import android.content.ContentValues
 import android.content.IntentSender
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.MediaScannerConnection
@@ -23,8 +20,6 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.google.mlkit.vision.documentscanner.GmsDocumentScannerOptions
@@ -33,14 +28,12 @@ import com.google.mlkit.vision.documentscanner.GmsDocumentScanningResult
 import com.rehman.docscan.R
 import com.rehman.docscan.databinding.FragmentHomeBinding
 import com.rehman.docscan.ui.local_db.TinyDB
-import com.rehman.utilities.Utils
 import com.rehman.utilities.Utils.showToast
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
-import java.io.IOException
 import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -69,7 +62,6 @@ class HomeFragment : Fragment() {
     private lateinit var storagePermissions: Array<String>
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -93,37 +85,11 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         scannerLauncher =
             registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
                 handleActivityResult(result)
             }
-
-        Log.d("Scanner","Size : ${getImagesFromMediaStore().size}")
-
-        getImagesFromMediaStore().forEach {
-
-
-            val fileName = getFileNameFromUri(it)
-            val parted =  fileName!!.split("-")
-            val date = parted[1]
-            val cleanTime = parted[2]
-            val x = cleanTime.split(" ")
-            val time = x[0]
-            val cleanAmPm = x[1].split(".")
-            val amPm = cleanAmPm[0]
-            val ext = cleanAmPm[1]
-            val hours = time.substring(0, 2)
-            val minutes = time.substring(2, 4)
-
-            val title = "${parted[0]}-$date-${time.replaceRange(0,2,"DS")}.$ext"
-            val desc = "$hours:$minutes ${amPm.uppercase()}, ${formatFileSize(getFileSizeFromUri(it))}, ${ext.uppercase()} image"
-
-
-            Log.d("Scanner","Uri : $it")
-            Log.d("Scanner","Uri : $title")
-            Log.d("Scanner","Uri : $desc")
-        }
-
 
 
         binding.scannerBtn.setOnClickListener {
@@ -167,7 +133,7 @@ class HomeFragment : Fragment() {
             Log.wtf("Scanner", "Scan Result -> $result")
 
 
-            lifecycleScope.launch(Dispatchers.IO){
+            lifecycleScope.launch(Dispatchers.IO) {
                 val pages = result.pages
                 if (pages!!.isNotEmpty()) {
                     pages.forEach {
@@ -185,17 +151,16 @@ class HomeFragment : Fragment() {
                         }
                     }
 
-                    withContext(Dispatchers.Main){
-                        if (pages.size > 1){
+                    withContext(Dispatchers.Main) {
+                        if (pages.size > 1) {
                             showToast("Images saved successfully.")
-                        }else{
+                        } else {
                             showToast("Image saved successfully.")
                         }
                     }
 
                 }
             }
-
 
 
         } else if (resultCode == Activity.RESULT_CANCELED) {
@@ -216,7 +181,6 @@ class HomeFragment : Fragment() {
             null
         }
     }
-
 
 
     private fun saveImageToMediaStore(bitmap: Bitmap) {
@@ -269,81 +233,16 @@ class HomeFragment : Fragment() {
         )
     }
 
-
-    private fun getImagesFromMediaStore(): List<Uri> {
-        val imageUris = mutableListOf<Uri>()
-        val contentResolver = requireContext().contentResolver
-        val projection = arrayOf(MediaStore.Images.Media._ID, MediaStore.Images.Media.DISPLAY_NAME)
-        val selection = "${MediaStore.Images.Media.RELATIVE_PATH} LIKE ?"
-        val selectionArgs = arrayOf("%${Environment.DIRECTORY_PICTURES}/DocScanner/%")
-        val sortOrder = "${MediaStore.Images.Media.DATE_ADDED} DESC"
-
-        val cursor = contentResolver.query(
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-            projection,
-            selection,
-            selectionArgs,
-            sortOrder
-        )
-
-        cursor?.use {
-            val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
-            while (cursor.moveToNext()) {
-                val id = cursor.getLong(idColumn)
-                val uri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
-                imageUris.add(uri)
-            }
-        }
-
-        return imageUris
-    }
-
-    private fun getFileNameFromUri(uri: Uri): String? {
-        val contentResolver: ContentResolver = requireContext().contentResolver
-        val projection = arrayOf(MediaStore.Images.Media.DISPLAY_NAME)
-        var fileName: String? = null
-
-        contentResolver.query(uri, projection, null, null, null)?.use { cursor ->
-            if (cursor.moveToFirst()) {
-                val nameIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME)
-                fileName = cursor.getString(nameIndex)
-            }
-        }
-
-        return fileName
-    }
-
-    private fun getFileSizeFromUri(uri: Uri): Long {
-        val contentResolver: ContentResolver = requireContext().contentResolver
-        val projection = arrayOf(MediaStore.Images.Media.SIZE)
-        var fileSize: Long = 0
-
-        contentResolver.query(uri, projection, null, null, null)?.use { cursor ->
-            if (cursor.moveToFirst()) {
-                val sizeIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.SIZE)
-                fileSize = cursor.getLong(sizeIndex)
-            }
-        }
-
-        return fileSize
-    }
-
-    private fun formatFileSize(size: Long): String {
-        val kb = size / 1024.0
-        val mb = kb / 1024.0
-        return when {
-            mb >= 1 -> String.format("%.2f MB", mb)
-            kb >= 1 -> String.format("%.2f KB", kb)
-            else -> String.format("%d bytes", size)
-        }
-    }
-
-
     private fun getCurrentDateAndTime(): String {
-        val format = SimpleDateFormat("yyyyMMdd-hhmmss a", Locale.getDefault())
-        return format.format(Calendar.getInstance().time)
-    }
+        val format = SimpleDateFormat("yyyyMMdd-hhmmssa", Locale.getDefault())
+        val dateTime = format.format(Calendar.getInstance().time)
+        return if (dateTime.contains("am")) {
+            dateTime.replace("am", "1")
+        } else {
+            dateTime.replace("pm", "2")
+        }
 
+    }
 
 
 }
