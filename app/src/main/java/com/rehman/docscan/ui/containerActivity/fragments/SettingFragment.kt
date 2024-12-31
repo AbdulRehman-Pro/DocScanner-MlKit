@@ -1,4 +1,4 @@
-package com.rehman.docscan.ui.fragments
+package com.rehman.docscan.ui.containerActivity.fragments
 
 import android.app.Dialog
 import android.graphics.Color
@@ -25,7 +25,7 @@ import androidx.fragment.app.Fragment
 import com.rehman.docscan.R
 import com.rehman.docscan.databinding.FragmentSettingBinding
 import com.rehman.docscan.databinding.ModesDialogBinding
-import com.rehman.docscan.ui.local_db.TinyDB
+import com.rehman.docscan.local_db.TinyDB
 import com.rehman.utilities.Utils
 
 

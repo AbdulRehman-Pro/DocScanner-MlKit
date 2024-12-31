@@ -1,4 +1,4 @@
-package com.rehman.docscan.ui.fragments
+package com.rehman.docscan.ui.containerActivity.fragments
 
 import android.app.Activity
 import android.content.ContentResolver
@@ -27,7 +27,7 @@ import com.google.mlkit.vision.documentscanner.GmsDocumentScanning
 import com.google.mlkit.vision.documentscanner.GmsDocumentScanningResult
 import com.rehman.docscan.R
 import com.rehman.docscan.databinding.FragmentHomeBinding
-import com.rehman.docscan.ui.local_db.TinyDB
+import com.rehman.docscan.local_db.TinyDB
 import com.rehman.utilities.Utils.showToast
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -46,8 +46,6 @@ private const val BASIC_MODE_WITH_FILTER = "BASE_WITH_FILTER"
 private const val SINGLE_PAGE = "1"
 private const val MULTI_PAGE = ""
 
-private const val STORAGE_REQUEST_CODE = 101
-
 class HomeFragment : Fragment() {
 
     private lateinit var scannerLauncher: ActivityResultLauncher<IntentSenderRequest>
@@ -58,8 +56,6 @@ class HomeFragment : Fragment() {
 
     private var selectedMode = FULL_MODE
     private var selectedPage = MULTI_PAGE
-
-    private lateinit var storagePermissions: Array<String>
 
 
     override fun onCreateView(

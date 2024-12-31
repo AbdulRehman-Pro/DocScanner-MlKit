@@ -1,4 +1,4 @@
-package com.rehman.docscan.ui.fragments.tabsFragments.pagerTransformer
+package com.rehman.docscan.ui.containerActivity.fragments.tabsFragments.pagerTransformer
 
 import android.view.View
 import androidx.viewpager2.widget.ViewPager2

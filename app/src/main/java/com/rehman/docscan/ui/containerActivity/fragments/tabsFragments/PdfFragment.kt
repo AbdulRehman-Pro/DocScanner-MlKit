@@ -1,4 +1,4 @@
-package com.rehman.docscan.ui.fragments.tabsFragments
+package com.rehman.docscan.ui.containerActivity.fragments.tabsFragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

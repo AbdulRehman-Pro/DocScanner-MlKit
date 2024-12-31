@@ -1,4 +1,4 @@
-package com.rehman.docscan.ui
+package com.rehman.docscan.ui.containerActivity
 
 import android.Manifest
 import android.app.Activity

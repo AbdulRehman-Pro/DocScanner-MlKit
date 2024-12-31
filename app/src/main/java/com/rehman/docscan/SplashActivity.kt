@@ -7,13 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.rehman.docscan.ui.ContainerActivity
+import com.rehman.docscan.ui.containerActivity.ContainerActivity
 import com.rehman.utilities.Utils
-import java.time.Clock
-import java.time.Instant
 
 private const val SPLASH_TIME: Long = 2000
 @SuppressLint("CustomSplashScreen")

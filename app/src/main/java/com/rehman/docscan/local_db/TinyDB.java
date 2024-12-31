@@ -1,4 +1,4 @@
-package com.rehman.docscan.ui.local_db;
+package com.rehman.docscan.local_db;
 
 /*
  * Copyright 2014 KC Ochibili

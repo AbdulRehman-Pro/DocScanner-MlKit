@@ -5,11 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/darkGreyBg"
-    tools:context=".ui.fragments.ExploreFragment">
+    tools:context=".ui.containerActivity.fragments.ExploreFragment">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabBarLayout"
+        android:background="@color/darkGreyBg"
         android:layout_width="match_parent"
+        android:visibility="gone"
         android:layout_height="wrap_content"
         app:tabBackground="@color/darkGreyBg"
         android:layout_marginTop="@dimen/_15sdp"
@@ -21,12 +23,12 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Images" />
+            android:text="@string/images" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="PDF" />
+            android:text="@string/pdf" />
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager2.widget.ViewPager2
